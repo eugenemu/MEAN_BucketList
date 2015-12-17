@@ -1,0 +1,24 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px 15px;
+}
+
+table {
+	margin-top: 20px;
+}
+
+label {
+	vertical-align: top;
+}
+
+.posts {
+	color: darkgreen;
+}
+
+.comments {
+	margin-left: 20px;
+	color: dodgerblue;
+}

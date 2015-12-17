@@ -1,0 +1,11 @@
+<div ng-controller="loginController">
+	<h1>BLACK BELT EXAM</h1>
+	<p>Hello!</p>
+	<p>Please enter your name to join and share your ideas</p>
+	<form name="usersForm">
+		<input type="text" name="name" ng-model="user.name"
+		ng-minlength='3'
+		required>
+		<button ng-click="login()">Enter</button>
+	</form>
+</div>
