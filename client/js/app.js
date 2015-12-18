@@ -9,6 +9,9 @@ myApp.config(function ($routeProvider) {
     .when('/dashboard', {
       templateUrl: 'static/partials/dashboard.html'
     })
+    .when('/new_appointment', {
+      templateUrl:'/static/partials/appointment.html'
+    })
     .otherwise({
       redirectTo: '/'
     });

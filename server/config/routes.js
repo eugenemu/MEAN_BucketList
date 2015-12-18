@@ -1,4 +1,5 @@
 var users = require('../controllers/usersController.js');
+var appts = require('../controllers/appointmentsController.js');
 
 module.exports = function(app) {
 
@@ -16,6 +17,19 @@ module.exports = function(app) {
 
 	app.post('/getUser', function(req, res) {
 		users.get(req, res);
+	})
+
+	//Appointment Routes
+	app.get('/showAppts', function(req, res) {
+		appts.show(req, res);
+	})
+
+	app.post('/addAppt', function(req, res) {
+		appts.add(req, res);
+	})
+
+	app.post('/deleteAppt', function(req, res) {
+		appts.delete(req, res);
 	})
 
 }

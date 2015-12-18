@@ -1,7 +1,25 @@
 <div ng-controller="dashboardController">
-	<p>Welcome, user!</p>
+	<p>Doctor's Appointment!</p>
 	<button ng-click="logout()">Logout</button>
-	<p>Search <input type="text" ng-model="filter_topics"></p>
-	
-
+	<p>Search <input type="text" ng-model="filterAppts"></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Complaint</th>
+				<th>Patient</th>
+				<th>Time</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="appt in appts | filter: filterAppts | orderBy: 'date'">
+				<td>{{appt.title}} <button ng-click="deleteAppt(appt._id)">Cancel</button></td>
+				<td>{{appt._user.name}}</td>
+				<td>{{appt.time | date: 'h:mma'}}</td>
+				<td>{{appt.date | date: MM/dd/yyyy}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<span ng-show="deleteError == true">You can only cancel your own appointments!</span><br>
+	<button ng-click='addAppt()'>Add New Appointment</button>
 </div>
