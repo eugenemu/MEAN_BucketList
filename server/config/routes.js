@@ -19,6 +19,10 @@ module.exports = function(app) {
 		users.get(req, res);
 	})
 
+	app.post('/getUserAppts', function(req, res) {
+		users.getAppts(req, res);
+	})
+
 	//Appointment Routes
 	app.get('/showAppts', function(req, res) {
 		appts.show(req, res);

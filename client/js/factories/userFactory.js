@@ -30,6 +30,13 @@ myApp.factory('userFactory', function($http, $sessionStorage) {
 		})
 	}
 
+	factory.getUserAppt = function(info, callback) {
+		info = {id: info};
+		$http.post('/getUserAppts', info).success(function(data) {
+			callback(data);
+		})
+	}
+
 	factory.logout = function() {
 		$sessionStorage.currUser = null;
 	}

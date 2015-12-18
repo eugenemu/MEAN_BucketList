@@ -5,7 +5,7 @@ var Appt = mongoose.model('Appointment');
 module.exports = {
 
 	show: function(req, res) {
-		Appt.find({}).deepPopulate(['._user']).exec(function(err, appts) {
+		Appt.find({}).deepPopulate(['._user', 'appointments']).exec(function(err, appts) {
 			if (err) {
 				console.log(err);
 			} else {

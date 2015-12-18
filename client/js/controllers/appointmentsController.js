@@ -10,14 +10,20 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 	$scope.dateError = false;
 	$scope.timeError = false;
 	$scope.amountError = false;
+	$scope.sameError = false;
 
 	appointmentFactory.showAppts(function(data) {
 		appts = data;
 	});
 
 
-	$scope.addAppt = function() {
+	var user = userFactory.user();
 
+	userFactory.getUserAppt(user._id, function(data) {
+		userInfo = data;
+	});
+
+	$scope.addAppt = function() {
 		var inputDate = Date.parse($scope.newAppt.date);
 		for (var i = 0; i < appts.length; i++) {
 			if (Date.parse(appts[i].date) == inputDate) {
@@ -25,27 +31,37 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 			}
 		}
 
-		if (count >= 3) {
-			$scope.amountError = true;
-		} else {
-			$scope.amountError = false;
-			if ($scope.newAppt.date > date) {
-				$scope.dateError = false;
-				if ($scope.newAppt.time < maxTime && $scope.newAppt.time > minTime) {
-					$scope.timeError = false;
-					$scope.newAppt._user = user._id;
-					appointmentFactory.addAppt($scope.newAppt, function(data) {
-						$scope.appts = data;
-						$scope.newAppt = {};
-					})
-				} else {
-					$scope.timeError = true;
-				}
+		for (var i = 0; i < userInfo.appointments.length; i++) {
+			if (Date.parse(userInfo.appointments[i].date) != inputDate) {
+				$scope.sameError = false;
 			} else {
-				$scope.dateError = true;
+				$scope.sameError = true;
 			}
 		}
-		
+
+
+		if ($scope.sameError == false) {
+			if (count >= 3) {
+				$scope.amountError = true;
+			} else {
+				$scope.amountError = false;
+				if ($scope.newAppt.date > date) {
+					$scope.dateError = false;
+					if ($scope.newAppt.time < maxTime && $scope.newAppt.time > minTime) {
+						$scope.timeError = false;
+						$scope.newAppt._user = user._id;
+						appointmentFactory.addAppt($scope.newAppt, function(data) {
+							$scope.appts = data;
+							$scope.newAppt = {};
+						})
+					} else {
+						$scope.timeError = true;
+					}
+				} else {
+					$scope.dateError = true;
+				}
+			}
+		}
 		
 	}
 

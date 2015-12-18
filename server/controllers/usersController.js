@@ -27,6 +27,17 @@ module.exports = {
 		})
 	},
 
+	getAppts: function(req, res) {
+		User.findOne({_id: req.body.id}).deepPopulate(['.appointments']).exec(function(err, user) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(user);
+				res.json(user);
+			}
+		})
+	},
+
 	add: function(req, res) {
 		var user = new User({name: req.body.name}); 
 		user.save(function(err) {
