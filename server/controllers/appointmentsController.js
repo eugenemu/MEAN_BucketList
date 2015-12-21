@@ -15,7 +15,6 @@ module.exports = {
 	},
 
 	add: function(req, res) {
-		console.log(req.body);
 		var appt = new Appt(req.body);
 		appt.save(function(err) {
 			if (err) {

@@ -31,12 +31,16 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 		// that retrieves that appointment's info and parse the date
 		// and subtract from now and if the time is over 86,400,000 then 
 		// there's still a day left so you can cancel the appt.
+
+		// checks for every appointment id the user has, that is logged in has
+		// and compares with the id of the appointment that is trying to be deleted.
 		for (var i = 0; i < userInfo.appointments.length; i++) {
 			if (userInfo.appointments[i] == id) {
 				$scope.deleteError = false;
 				appointmentFactory.deleteAppt(id, function(data) {
 					$scope.appts = data;
 				})
+				break;
 			} else {
 				$scope.deleteError = true;
 			} 

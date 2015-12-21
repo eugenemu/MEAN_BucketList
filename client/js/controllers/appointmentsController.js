@@ -24,13 +24,12 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 	});
 
 	$scope.addAppt = function() {
-		var inputDate = Date.parse($scope.newAppt.date);
-		for (var i = 0; i < appts.length; i++) {
-			if (Date.parse(appts[i].date) == inputDate) {
-				count++;
-			}
-		}
 
+		var inputDate = Date.parse($scope.newAppt.date);
+		
+
+		// Checks whether the user already has an appointment on that
+		// input date.
 		for (var i = 0; i < userInfo.appointments.length; i++) {
 			if (Date.parse(userInfo.appointments[i].date) != inputDate) {
 				$scope.sameError = false;
@@ -39,6 +38,11 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 			}
 		}
 
+		for (var i = 0; i < appts.length; i++) {
+			if (Date.parse(appts[i].date) == inputDate) {
+				count++;
+			}
+		}
 
 		if ($scope.sameError == false) {
 			if (count >= 3) {
