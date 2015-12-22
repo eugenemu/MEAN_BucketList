@@ -6,7 +6,6 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 
 	userFactory.getUser(user._id, function(data) {
 		userInfo = data;
-		console.log(data);
 	});
 
 	userFactory.getUserAppt(user._id, function(data) {
@@ -38,9 +37,7 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 			$scope.deleteError = true;
 		} else {
 			for (var i = 0; i < userInfo.appointments.length; i++) {
-				console.log("for loop working");
 				if (userInfo.appointments[i] == id) {
-					console.log("this");
 					$scope.deleteError = false;
 					break;
 				} else {
@@ -48,10 +45,7 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 				} 
 			}
 		}
-
 		
-		
-
 		// Finds the appt info for designated person and appt id
 		for (var i = 0; i < userAppt.appointments.length; i++) {
 			if (userAppt.appointments[i]._id == id) {
@@ -61,12 +55,16 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 		}
 
 		// Checks whether appt is a day later or not.
-		if ((Date.parse(apptDate) - Date.parse(date)) > 86400000) {
-			$scope.timeError = false;
-		} else {
-			$scope.timeError = true;
+		if (apptDate) {
+			if ((Date.parse(apptDate) - Date.parse(date)) > 86400000) {
+				console.log("timeError is false");
+				$scope.timeError = false;
+			} else {
+				console.log("timeError is true");
+				$scope.timeError = true;
+			}
 		}
-
+		
 		// Checks the validations and if all are good, execute delete function.
 		if ($scope.deleteError == false) {
 			if ($scope.timeError == false) {
@@ -75,8 +73,6 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 				});
 			}
 		}
-
-		console.log($scope.deleteError);
 
 	}
 
