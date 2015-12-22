@@ -26,29 +26,33 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 	$scope.addAppt = function() {
 
 		var inputDate = Date.parse($scope.newAppt.date);
-		
 
-		// Checks whether the user already has an appointment on that
-		// input date.
+		// Checks whether the user already has an appointment on that input date.
 		for (var i = 0; i < userInfo.appointments.length; i++) {
 			if (Date.parse(userInfo.appointments[i].date) != inputDate) {
 				$scope.sameError = false;
+				break;
 			} else {
 				$scope.sameError = true;
 			}
 		}
 
+		// Checks how many appointments are already on that date.
+		// Count keeps track.
 		for (var i = 0; i < appts.length; i++) {
 			if (Date.parse(appts[i].date) == inputDate) {
 				count++;
 			}
 		}
 
+		// If appointment is already on same day, won't enter if statements.
 		if ($scope.sameError == false) {
+			// If there already 3 appts on that day, trigger error.
 			if (count >= 3) {
 				$scope.amountError = true;
 			} else {
 				$scope.amountError = false;
+				// Nested if/else statement so additional operations won't be ran.
 				if ($scope.newAppt.date > date) {
 					$scope.dateError = false;
 					if ($scope.newAppt.time < maxTime && $scope.newAppt.time > minTime) {
@@ -66,7 +70,6 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 				}
 			}
 		}
-		
 	}
 
 
