@@ -6,6 +6,7 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 
 	userFactory.getUser(user._id, function(data) {
 		userInfo = data;
+		console.log(data);
 	});
 
 	userFactory.getUserAppt(user._id, function(data) {
@@ -33,14 +34,23 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 		var date = new Date();
 
 		// Checks for every appointment id the user has, that is logged in has and compares with the id of the appointment that is trying to be deleted.
-		for (var i = 0; i < userInfo.appointments.length; i++) {
-			if (userInfo.appointments[i] == id) {
-				$scope.deleteError = false;
-				break;
-			} else {
-				$scope.deleteError = true;
-			} 
+		if (userInfo.appointments.length == 0) {
+			$scope.deleteError = true;
+		} else {
+			for (var i = 0; i < userInfo.appointments.length; i++) {
+				console.log("for loop working");
+				if (userInfo.appointments[i] == id) {
+					console.log("this");
+					$scope.deleteError = false;
+					break;
+				} else {
+					$scope.deleteError = true;
+				} 
+			}
 		}
+
+		
+		
 
 		// Finds the appt info for designated person and appt id
 		for (var i = 0; i < userAppt.appointments.length; i++) {
@@ -54,7 +64,6 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 		if ((Date.parse(apptDate) - Date.parse(date)) > 86400000) {
 			$scope.timeError = false;
 		} else {
-			console.log((Date.parse(apptDate) - Date.parse(date)));
 			$scope.timeError = true;
 		}
 
@@ -66,6 +75,8 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 				});
 			}
 		}
+
+		console.log($scope.deleteError);
 
 	}
 
