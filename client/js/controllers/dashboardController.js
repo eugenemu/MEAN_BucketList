@@ -14,6 +14,7 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 
 	appointmentFactory.showAppts(function(data) {
 		$scope.appts = data;
+		console.log(data);
 	});
 	
 	$scope.logout = function() {

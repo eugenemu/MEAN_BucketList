@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var path = require('path');
 
-mongoose.connect("mongodb://localhost/MEAN_BBE"); //write in database name
+mongoose.connect("mongodb://localhost/MEAN_BBE2"); //write in database name
 var models_path = path.join(__dirname, './../models');
 
 fs.readdirSync(models_path).forEach(function(file) {

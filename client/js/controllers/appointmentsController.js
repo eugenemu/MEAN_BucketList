@@ -16,7 +16,6 @@ myApp.controller('appointmentsController', function ($scope, $location, $routePa
 		appts = data;
 	});
 
-
 	var user = userFactory.user();
 
 	userFactory.getUserAppt(user._id, function(data) {
