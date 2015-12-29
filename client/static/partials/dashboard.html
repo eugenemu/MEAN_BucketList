@@ -39,8 +39,8 @@
 
 	<p>Before I die I want to...</p>
 	<p ng-repeat="activity in activities.activities">
-		<button ng-click="toggleCheck">{{activity.check}}</button>
-		{{activity._user.name}} | {{activity.title}} - {{activity.description}}... - {{activity.date | date: 'medium'}} 
+		<button ng-click="toggleCheck(activity._id)"> Done? {{activity.check}}</button>
+		{{activity._user.name}} | {{activity.title}} - {{activity.description}}... - {{activity.date | date: 'short'}} 
 	</p>
 
 	<p>List of logged users (Click to view profile): </p>

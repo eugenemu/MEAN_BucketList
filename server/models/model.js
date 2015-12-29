@@ -12,8 +12,8 @@ mongoose.model('User', UserSchema);
 UserSchema.plugin(deepPopulate);
 
 var ActivitySchema = new mongoose.Schema({
-	title: String,
-	description: String,
+	title: {type: String, required: true},
+	description: {type: String, required: true},
 	check: Boolean,
 	date: Date,
 	_user: {type: Schema.Types.ObjectId, ref: 'User'}

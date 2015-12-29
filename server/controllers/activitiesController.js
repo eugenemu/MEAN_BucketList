@@ -16,23 +16,37 @@ module.exports = {
 
 	add: function(req, res) {
 		var activity = new Activity(req.body);
+		console.log(activity);
 		activity.save(function(err) {
 			if (err) {
 				console.log(err);
 			} else {
 				User.findByIdAndUpdate({_id: activity._user}, {$push: {activities: activity._id}}, function(err, doc) {});
-				res.redirect('/showActivities');
+				User.findOne({_id: activity._user}).deepPopulate(['activities', 'activities._user']).exec(function(err, activities) {
+					if (err) {
+						console.log(err);
+					} else {
+						res.json(activities);
+					}
+				})
 			}
 		})
 	},
 
-	delete: function(req, res) {
-		Appt.findOneAndRemove({_id: req.body.id}, function(err, doc) {
+	toggle: function(req, res) {
+		Activity.findByIdAndUpdate({_id: req.body._id}, {$set: {check: true}}, function(err, doc) {
 			if (err) {
 				console.log(err);
 			} else {
-				res.redirect('/showAppts');
+				User.findOne({_id: req.body.userid}).deepPopulate(['activities', 'activities._user']).exec(function(err, activities) {
+					if (err) {
+						console.log(err);
+					} else {
+						res.json(activities);
+					}
+				});
 			}
-		})
+		});
 	}
+
 }

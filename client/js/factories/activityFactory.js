@@ -13,14 +13,14 @@ myApp.factory('activityFactory', function($http, $sessionStorage) {
 	factory.addActivity = function(info, callback) {
 		info.date = Date();
 		info.check = false;
+		console.log(info);
 		$http.post('/addActivity', info).success(function(data) {
 			callback(data);
 		})
 	}
 
-	factory.deleteAppt = function(info, callback) {
-		info = {id: info};
-		$http.post('/deleteAppt', info).success(function(data) {
+	factory.toggleCheck = function(info, callback) {
+		$http.post('/toggleCheck', info).success(function(data) {
 			callback(data);
 		})
 	}

@@ -9,6 +9,7 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 
 	activityFactory.showActivities($scope.user._id, function(data) {
 		$scope.activities = data;
+		console.log(data);
 	});
 	
 	$scope.logout = function() {
@@ -17,28 +18,29 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 	}
 
 	$scope.addActivity = function() {
-		if ($scope.newActivity._user == $scope.user._id) {
 
-			activityFactory.addActivity($scope.newActivity, function(data) {
-				$scope.activities = data;
-			});
-
-		} else { 
-
-			activityFactory.addActivity($scope.newActivity, function(data) {
-				$scope.activities = data;
-			});
-
-			$scope.newActivity._user = $scope.user._id;
-			activityFactory.addActivity($scope.newActivity, function(data) {
-				$scope.activities = data;
-			});
-
+		if ($scope.newActivity.title && $scope.newActivity.description) {
+			if ($scope.newActivity._user == $scope.user._id) {
+				activityFactory.addActivity($scope.newActivity, function(data) {
+					$scope.activities = data;
+				});
+			} else { 
+				activityFactory.addActivity($scope.newActivity, function(data) {
+					$scope.activities = data;
+				});
+				$scope.newActivity._user = $scope.user._id;
+				activityFactory.addActivity($scope.newActivity, function(data) {
+					$scope.activities = data;
+				});
+			}
 		}
 	}
 
-	$scope.toggleCheck = function(data) {
-
+	$scope.toggleCheck = function(id) {
+		info = {_id: id, userid: $scope.user._id};
+		activityFactory.toggleCheck(info, function(data) {
+			$scope.activities = data;
+		})
 	}
 
 });

@@ -25,7 +25,6 @@ module.exports = function(app) {
 
 	//Activities Routes
 	app.post('/showActivities', function(req, res) {
-		console.log(req.body);
 		activities.show(req, res);
 	})
 
@@ -33,8 +32,8 @@ module.exports = function(app) {
 		activities.add(req, res);
 	})
 
-	app.post('/deleteAppt', function(req, res) {
-		activities.delete(req, res);
+	app.post('/toggleCheck', function(req, res) {
+		activities.toggle(req, res);
 	})
 
 }
