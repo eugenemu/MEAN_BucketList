@@ -8,6 +8,6 @@
 	</ul>
 	<p>Pending:</p>
 	<ul ng-repeat="activity in user.activities">
-		<li ng-if="activity.check == false">{{activity.title}} <button ng-if="currUser._id == user._id" ng-click="toggleCheck(activity._id)">Check</button></li>
+		<li ng-if="activity.check == false">{{activity._user.name}} | {{activity.title}} - {{activity.description}} - {{activity.date | date: 'short'}} <button ng-if="currUser._id == user._id" ng-click="toggleCheck(activity._id)">Check</button></li>
 	</ul>
 </div>

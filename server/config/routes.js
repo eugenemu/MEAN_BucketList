@@ -29,6 +29,7 @@ module.exports = function(app) {
 	})
 
 	app.post('/addActivity', function(req, res) {
+		console.log(req.body);
 		activities.add(req, res);
 	})
 

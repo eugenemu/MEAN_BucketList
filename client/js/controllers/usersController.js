@@ -5,6 +5,7 @@ myApp.controller('usersController', function ($scope, $location, $routeParams, u
 
 	userFactory.getUser($routeParams, function(data) {
 		$scope.user = data;
+		console.log(data);
 	});
 
 	$scope.toggleCheck = function(id) {

@@ -13,7 +13,6 @@ myApp.factory('activityFactory', function($http, $sessionStorage) {
 	factory.addActivity = function(info, callback) {
 		info.date = Date();
 		info.check = false;
-		console.log(info);
 		$http.post('/addActivity', info).success(function(data) {
 			callback(data);
 		})

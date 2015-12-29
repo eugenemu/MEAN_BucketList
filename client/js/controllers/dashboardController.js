@@ -23,15 +23,20 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 			if ($scope.newActivity._user == $scope.user._id) {
 				activityFactory.addActivity($scope.newActivity, function(data) {
 					$scope.activities = data;
+					$scope.newActivity = {};
 				});
 			} else { 
+
 				activityFactory.addActivity($scope.newActivity, function(data) {
-					$scope.activities = data;
+					$scope.newActivity._user = $scope.user._id;
+					activityFactory.addActivity($scope.newActivity, function(data) {
+						$scope.activities = data;
+						$scope.newActivity = {};
+					});
 				});
-				$scope.newActivity._user = $scope.user._id;
-				activityFactory.addActivity($scope.newActivity, function(data) {
-					$scope.activities = data;
-				});
+
+				
+
 			}
 		}
 	}

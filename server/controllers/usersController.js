@@ -18,7 +18,7 @@ module.exports = {
 	},
 
 	get: function(req, res) {
-		User.findOne({_id: req.body.id}).deepPopulate(['activities']).exec(function(err, user) {
+		User.findOne({_id: req.body.id}).deepPopulate(['activities', 'activities._user']).exec(function(err, user) {
 			if (err) {
 				console.log(err);
 			} else {

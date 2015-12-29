@@ -16,7 +16,6 @@ module.exports = {
 
 	add: function(req, res) {
 		var activity = new Activity(req.body);
-		console.log(activity);
 		activity.save(function(err) {
 			if (err) {
 				console.log(err);
