@@ -1,20 +1,14 @@
 angular.module('myApp');
-myApp.controller('dashboardController', function ($scope, $location, userFactory, appointmentFactory) {
+myApp.controller('dashboardController', function ($scope, $location, userFactory, activityFactory) {
 
-	var user = userFactory.user();
-	$scope.timeError = false;
+	$scope.user = userFactory.user();
 
-	userFactory.getUser(user._id, function(data) {
-		userInfo = data;
+	userFactory.getUsers(function(data) {
+		$scope.users = data;
 	});
 
-	userFactory.getUserAppt(user._id, function(data) {
-		userAppt = data;
-	});
-
-	appointmentFactory.showAppts(function(data) {
-		$scope.appts = data;
-		console.log(data);
+	activityFactory.showActivities($scope.user._id, function(data) {
+		$scope.activities = data;
 	});
 	
 	$scope.logout = function() {
@@ -22,58 +16,28 @@ myApp.controller('dashboardController', function ($scope, $location, userFactory
 		$location.url('/');
 	}
 
-	$scope.addAppt = function() {
-		$location.url('/new_appointment');
+	$scope.addActivity = function() {
+		if ($scope.newActivity._user == $scope.user._id) {
+
+			activityFactory.addActivity($scope.newActivity, function(data) {
+				$scope.activities = data;
+			});
+
+		} else { 
+
+			activityFactory.addActivity($scope.newActivity, function(data) {
+				$scope.activities = data;
+			});
+
+			$scope.newActivity._user = $scope.user._id;
+			activityFactory.addActivity($scope.newActivity, function(data) {
+				$scope.activities = data;
+			});
+
+		}
 	}
 
-	$scope.deleteError = false;
-
-	$scope.deleteAppt = function(id) {
-
-		var apptDate;
-		var date = new Date();
-
-		// Checks for every appointment id the user has, that is logged in has and compares with the id of the appointment that is trying to be deleted.
-		if (userInfo.appointments.length == 0) {
-			$scope.deleteError = true;
-		} else {
-			for (var i = 0; i < userInfo.appointments.length; i++) {
-				if (userInfo.appointments[i] == id) {
-					$scope.deleteError = false;
-					break;
-				} else {
-					$scope.deleteError = true;
-				} 
-			}
-		}
-		
-		// Finds the appt info for designated person and appt id
-		for (var i = 0; i < userAppt.appointments.length; i++) {
-			if (userAppt.appointments[i]._id == id) {
-				apptDate = userAppt.appointments[i].date;
-				break;
-			}
-		}
-
-		// Checks whether appt is a day later or not.
-		if (apptDate) {
-			if ((Date.parse(apptDate) - Date.parse(date)) > 86400000) {
-				console.log("timeError is false");
-				$scope.timeError = false;
-			} else {
-				console.log("timeError is true");
-				$scope.timeError = true;
-			}
-		}
-		
-		// Checks the validations and if all are good, execute delete function.
-		if ($scope.deleteError == false) {
-			if ($scope.timeError == false) {
-				appointmentFactory.deleteAppt(id, function(data) {
-					$scope.appts = data;
-				});
-			}
-		}
+	$scope.toggleCheck = function(data) {
 
 	}
 

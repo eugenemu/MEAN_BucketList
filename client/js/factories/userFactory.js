@@ -24,15 +24,13 @@ myApp.factory('userFactory', function($http, $sessionStorage) {
 	}
 
 	factory.getUser = function(info, callback) {
-		info = {id: info};
 		$http.post('/getUser', info).success(function(data) {
 			callback(data);
 		})
 	}
 
-	factory.getUserAppt = function(info, callback) {
-		info = {id: info};
-		$http.post('/getUserAppts', info).success(function(data) {
+	factory.getUsers = function(callback) {
+		$http.get('/getUsers').success(function(data) {
 			callback(data);
 		})
 	}

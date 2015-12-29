@@ -7,7 +7,7 @@ module.exports = {
 		res.render('index.html');
 	},
 
-	getUser: function(req, res) {
+	checkUser: function(req, res) {
 		User.findOne({name: req.body.name}, function(err, user) {
 			if (err) {
 				console.log(err);
@@ -18,7 +18,7 @@ module.exports = {
 	},
 
 	get: function(req, res) {
-		User.findOne({_id: req.body.id}, function(err, user) {
+		User.findOne({_id: req.body.id}).deepPopulate(['activities']).exec(function(err, user) {
 			if (err) {
 				console.log(err);
 			} else {
@@ -27,13 +27,12 @@ module.exports = {
 		})
 	},
 
-	getAppts: function(req, res) {
-		User.findOne({_id: req.body.id}).deepPopulate(['.appointments']).exec(function(err, user) {
+	getAll: function(req, res) {
+		User.find({}, function(err, users) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log(user);
-				res.json(user);
+				res.json(users);
 			}
 		})
 	},
@@ -42,10 +41,8 @@ module.exports = {
 		var user = new User({name: req.body.name}); 
 		user.save(function(err) {
 			if (err) {
-				console.log("didnt save");
 				console.log(err); 
 			} else {
-				console.log("saved", user)
 				res.json(user);
 			}
 		});

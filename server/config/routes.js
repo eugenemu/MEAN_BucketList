@@ -1,5 +1,5 @@
 var users = require('../controllers/usersController.js');
-var appts = require('../controllers/appointmentsController.js');
+var activities = require('../controllers/activitiesController.js');
 
 module.exports = function(app) {
 
@@ -8,7 +8,7 @@ module.exports = function(app) {
 	})
 	//Users Routes
 	app.post('/checkUser', function(req, res) {
-		users.getUser(req, res);
+		users.checkUser(req, res);
 	})
 
 	app.post('/addUser', function(req, res) {
@@ -19,21 +19,22 @@ module.exports = function(app) {
 		users.get(req, res);
 	})
 
-	app.post('/getUserAppts', function(req, res) {
-		users.getAppts(req, res);
+	app.get('/getUsers', function(req, res) {
+		users.getAll(req, res);
 	})
 
-	//Appointment Routes
-	app.get('/showAppts', function(req, res) {
-		appts.show(req, res);
+	//Activities Routes
+	app.post('/showActivities', function(req, res) {
+		console.log(req.body);
+		activities.show(req, res);
 	})
 
-	app.post('/addAppt', function(req, res) {
-		appts.add(req, res);
+	app.post('/addActivity', function(req, res) {
+		activities.add(req, res);
 	})
 
 	app.post('/deleteAppt', function(req, res) {
-		appts.delete(req, res);
+		activities.delete(req, res);
 	})
 
 }

@@ -1,10 +1,10 @@
 <div ng-controller="loginController">
 	<h1>BLACK BELT EXAM OPTION A</h1>
 	<p>Bucket Lists</p>
-	<form>
+	<form name="form">
 		Name: <input type="text" name="name" ng-model="user.name"
 		ng-minlength='3'
-		required>
+		required />
 		<button ng-click="login()">Enter</button>
 	</form>
 </div>
